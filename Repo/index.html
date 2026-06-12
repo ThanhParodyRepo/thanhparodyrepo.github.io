@@ -2,480 +2,344 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Kho Jailbreak</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MrPew iOS Repo</title>
     <style>
-        /* Reset và biến cơ bản */
-        *, *::before, *::after {
+        :root {
+            --bg: #ffffff;
+            --text: #1c1c1e;
+            --card-bg: #f9f9fb;
+            --border: #e5e5ea;
+            --accent: #007aff;
+            --accent-light: #e8f2ff;
+            --muted: #8e8e93;
+            --header-bg: #ffffff;
+            --shadow: 0 2px 8px rgba(0,0,0,0.04);
+            --toggle-bg: #e9e9ef;
+            --toggle-dot: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg: #1c1c1e;
+            --text: #f2f2f7;
+            --card-bg: #2c2c2e;
+            --border: #38383a;
+            --accent: #0a84ff;
+            --accent-light: #1a3a5c;
+            --muted: #98989d;
+            --header-bg: #2c2c2e;
+            --shadow: 0 2px 8px rgba(0,0,0,0.3);
+            --toggle-bg: #48484a;
+            --toggle-dot: #1c1c1e;
+        }
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            /* Giao diện sáng (mặc định) */
-            --bg-primary: #f4f6f9;
-            --bg-secondary: #ffffff;
-            --bg-card: #ffffff;
-            --text-primary: #1a1a2e;
-            --text-secondary: #4a4a6a;
-            --text-muted: #6c6c8a;
-            --border-color: #e0e4e8;
-            --accent-color: #6c5ce7;
-            --accent-hover: #5a4bd1;
-            --badge-bg: #e8e5ff;
-            --badge-text: #6c5ce7;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --toggle-bg: #e0e4e8;
-            --toggle-thumb: #ffffff;
-            --code-bg: #f0f0f5;
-            --transition-speed: 0.3s;
-        }
-
-        /* Giao diện tối */
-        [data-theme="dark"] {
-            --bg-primary: #0f0f1a;
-            --bg-secondary: #1a1a2e;
-            --bg-card: #1a1a2e;
-            --text-primary: #e8e8f0;
-            --text-secondary: #b0b0c0;
-            --text-muted: #8888a0;
-            --border-color: #2a2a40;
-            --accent-color: #a29bfe;
-            --accent-hover: #b9b3ff;
-            --badge-bg: #2a2a40;
-            --badge-text: #a29bfe;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-            --toggle-bg: #3a3a50;
-            --toggle-thumb: #1a1a2e;
-            --code-bg: #2a2a40;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: all 0.3s ease;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* Thanh tiêu đề */
-        .header {
-            background-color: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-sm);
-            transition: background-color var(--transition-speed), border-color var(--transition-speed);
-        }
-
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* HEADER giống Cydia/Sileo */
+        .repo-header {
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
         }
 
-        .logo {
+        .repo-brand {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text-primary);
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.5px;
+            gap: 10px;
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+        .repo-avatar {
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
+            background: linear-gradient(135deg, #007aff, #5856d6);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.2rem;
+            font-weight: 700;
+            font-size: 18px;
         }
 
-        /* Bộ chuyển đổi giao diện */
-        .theme-toggle-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .repo-name {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
         }
 
-        .theme-label {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            user-select: none;
+        .repo-url {
+            font-size: 13px;
+            color: var(--muted);
         }
 
-        .theme-toggle {
-            position: relative;
-            width: 60px;
-            height: 30px;
-            background-color: var(--toggle-bg);
-            border-radius: 30px;
+        /* NÚT CHUYỂN SÁNG/TỐI NHƯ TRONG REPO GỐC */
+        .theme-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
             cursor: pointer;
-            border: 2px solid var(--border-color);
-            transition: background-color var(--transition-speed), border-color var(--transition-speed);
-            display: inline-block;
-        }
-
-        .theme-toggle::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 22px;
-            height: 22px;
-            background-color: var(--toggle-thumb);
+            padding: 8px;
             border-radius: 50%;
-            transition: transform var(--transition-speed), background-color var(--transition-speed);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-        }
-
-        /* Checkbox ẩn */
-        #theme-checkbox {
-            display: none;
-        }
-
-        #theme-checkbox:checked + .theme-toggle::after {
-            transform: translateX(28px);
-        }
-
-        /* Biểu tượng bên trong nút chuyển */
-        .toggle-icon {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.8rem;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .toggle-icon.sun {
-            left: 7px;
-        }
-
-        .toggle-icon.moon {
-            right: 7px;
-        }
-
-        /* Nội dung chính */
-        .main-content {
-            flex: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            width: 100%;
-        }
-
-        /* Tiêu đề trang */
-        .page-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .page-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        /* Lưới gói */
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .package-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-md);
-            transition: transform 0.2s, box-shadow 0.2s, background-color var(--transition-speed), border-color var(--transition-speed);
-            cursor: pointer;
-        }
-
-        .package-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .package-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .package-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            transition: all 0.2s;
+            color: var(--text);
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.3rem;
+        }
+
+        .theme-btn:hover {
+            background: var(--card-bg);
+        }
+
+        .theme-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* PHẦN CHÍNH */
+        .main {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        /* Ô TÌM KIẾM */
+        .search-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 16px;
+            width: 100%;
+            color: var(--text);
+            outline: none;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .search-box::placeholder {
+            color: var(--muted);
+        }
+
+        /* DANH SÁCH GÓI */
+        .package-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .package-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .package-item:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-1px);
+        }
+
+        .package-item:active {
+            transform: scale(0.985);
+            background: var(--accent-light);
+        }
+
+        .pkg-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
             flex-shrink: 0;
         }
 
-        .package-name {
+        .pkg-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pkg-name {
             font-weight: 600;
-            font-size: 1.2rem;
-            color: var(--text-primary);
+            font-size: 17px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .package-version {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            background-color: var(--badge-bg);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-weight: 500;
+        .pkg-desc {
+            font-size: 14px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
         }
 
-        .package-description {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
+        .pkg-arrow {
+            color: var(--muted);
+            font-size: 18px;
+            flex-shrink: 0;
         }
 
-        .package-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            flex-wrap: wrap;
-        }
-
-        .package-badge {
-            background-color: var(--badge-bg);
-            color: var(--badge-text);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.8rem;
-        }
-
-        /* Mã nguồn hiển thị */
-        .code-block {
-            background-color: var(--code-bg);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-top: 1rem;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            font-size: 0.9rem;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            border: 1px solid var(--border-color);
-        }
-
-        /* Footer */
-        .footer {
-            background-color: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem 2rem;
+        /* FOOTER */
+        .repo-footer {
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            transition: background-color var(--transition-speed), border-color var(--transition-speed);
+            padding: 30px 20px;
+            color: var(--muted);
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+            margin-top: 30px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .packages-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .main-content {
-                padding: 1rem;
-            }
+        .repo-footer a {
+            color: var(--accent);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <!-- Thanh tiêu đề -->
-    <header class="header">
-        <div class="header-inner">
-            <a href="#" class="logo">
-                <div class="logo-icon">⚡</div>
-                <span>Kho Jailbreak</span>
-            </a>
 
-            <!-- Bộ chuyển đổi Sáng/Tối -->
-            <div class="theme-toggle-wrapper">
-                <span class="theme-label">🌞 Sáng</span>
-                <input type="checkbox" id="theme-checkbox" onchange="toggleTheme()">
-                <label for="theme-checkbox" class="theme-toggle" aria-label="Chuyển đổi giao diện sáng/tối">
-                    <span class="toggle-icon sun">☀️</span>
-                    <span class="toggle-icon moon">🌙</span>
-                </label>
-                <span class="theme-label">🌙 Tối</span>
+    <!-- HEADER -->
+    <header class="repo-header">
+        <div class="repo-brand">
+            <div class="repo-avatar">M</div>
+            <div>
+                <div class="repo-name">MrPew</div>
+                <div class="repo-url">mrpewios.github.io</div>
             </div>
         </div>
+        <button class="theme-btn" id="themeToggle" title="Chuyển sáng/tối">
+            <span id="themeIcon">🌙</span>
+        </button>
     </header>
 
-    <!-- Nội dung chính -->
-    <main class="main-content">
-        <h1 class="page-title">📦 Gói Jailbreak</h1>
-        <p class="page-subtitle">Bộ sưu tập các gói jailbreak mới nhất dành cho thiết bị của bạn. Chọn một gói để xem chi tiết.</p>
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="main">
+        <input type="text" class="search-box" placeholder="Tìm kiếm gói..." id="searchInput">
 
-        <div class="packages-grid" id="packages-container">
-            <!-- Gói được tạo động bằng JavaScript -->
+        <div class="package-list" id="packageList">
+            <!-- Gói sẽ được tạo bằng JS -->
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2025 Kho Jailbreak. Tất cả các gói được cung cấp chỉ nhằm mục đích giáo dục và nghiên cứu.</p>
+    <!-- FOOTER -->
+    <footer class="repo-footer">
+        <p>© 2025 <a href="https://mrpewios.github.io" target="_blank">MrPew Repo</a>. Tất cả gói đều miễn phí.</p>
+        <p style="margin-top: 4px;">Thêm vào Cydia/Sileo: <code style="background:var(--card-bg);padding:2px 6px;border-radius:4px;">https://mrpewios.github.io</code></p>
     </footer>
 
     <script>
-        // Dữ liệu gói mẫu
+        // DỮ LIỆU GÓI - GIỐNG REPO GỐC
         const packages = [
-            {
-                id: 'jb-001',
-                name: 'Unc0ver',
-                version: '8.0.2',
-                description: 'Công cụ jailbreak bán tethered cho iOS 11.0 - 14.8. Hỗ trợ Cydia và Substrate.',
-                icon: '🔓',
-                badge: 'Phổ biến',
-                date: '2024-12-01'
-            },
-            {
-                id: 'jb-002',
-                name: 'Taurine',
-                version: '1.1.7',
-                description: 'Jailbreak cho iOS 14.0 - 14.3 sử dụng libhooker. Nhẹ và ổn định.',
-                icon: '🐂',
-                badge: 'Mới',
-                date: '2025-01-15'
-            },
-            {
-                id: 'jb-003',
-                name: 'Dopamine',
-                version: '2.0.5',
-                description: 'Jailbreak rootless cho iOS 15.0 - 16.6.1. Hỗ trợ Sileo và Zebra.',
-                icon: '🧠',
-                badge: 'Khuyên dùng',
-                date: '2025-02-20'
-            },
-            {
-                id: 'jb-004',
-                name: 'palera1n',
-                version: '2.1.3',
-                description: 'Jailbreak checkm8 cho thiết bị A8-A11. Hỗ trợ iOS 15.x - 17.x.',
-                icon: '🍏',
-                badge: 'Tethered',
-                date: '2025-03-10'
-            },
-            {
-                id: 'jb-005',
-                name: 'XinaA15',
-                version: '1.2.0',
-                description: 'Jailbreak cho thiết bị A12-A15 chạy iOS 15.0 - 15.4.1. Hỗ trợ rootful.',
-                icon: '🇨🇳',
-                badge: 'Thử nghiệm',
-                date: '2025-04-05'
-            },
-            {
-                id: 'jb-006',
-                name: 'Bootstrap',
-                version: '1.0.0',
-                description: 'Môi trường bootstrap cho iOS 17.0+. Tiền đề cho jailbreak đầy đủ.',
-                icon: '🚀',
-                badge: 'Beta',
-                date: '2025-05-01'
-            }
+            { name: "Choicy", desc: "Tinh chỉnh kiểm soát tweak injection", icon: "🎛️" },
+            { name: "SnowBoard", desc: "Công cụ thay đổi theme mạnh mẽ", icon: "❄️" },
+            { name: "iCleaner Pro", desc: "Dọn dẹp rác hệ thống iOS", icon: "🧹" },
+            { name: "Filza File Manager", desc: "Trình quản lý file cho iOS", icon: "📁" },
+            { name: "AppSync Unified", desc: "Cài đặt ứng dụng IPA không cần ký", icon: "📱" },
+            { name: "NewTerm 2", desc: "Terminal cho iOS", icon: "💻" },
+            { name: "CCSupport", desc: "Hỗ trợ tùy chỉnh Control Center", icon: "🎮" },
+            { name: "RocketBootstrap", desc: "Thư viện cho tweak giao tiếp app", icon: "🚀" },
+            { name: "PreferenceLoader", desc: "Tải preference bundle", icon: "⚙️" },
+            { name: "Cephei", desc: "Framework hỗ trợ lập trình tweak", icon: "🔧" },
+            { name: "libcolorpicker", desc: "Thư viện bảng chọn màu", icon: "🎨" },
+            { name: "Flipswitch", desc: "Công tắc bật/tắt cho Control Center", icon: "🔘" }
         ];
 
-        // Hàm hiển thị gói
-        function renderPackages() {
-            const container = document.getElementById('packages-container');
-            container.innerHTML = packages.map(pkg => `
-                <div class="package-card" onclick="alert('Đã chọn gói: ${pkg.name} v${pkg.version}\\n${pkg.description}')">
-                    <div class="package-header">
-                        <div class="package-icon">${pkg.icon}</div>
-                        <div>
-                            <div class="package-name">${pkg.name}</div>
-                            <span class="package-version">v${pkg.version}</span>
-                        </div>
+        // Hàm render danh sách gói
+        function renderPackages(filter = '') {
+            const list = document.getElementById('packageList');
+            const filtered = packages.filter(p => 
+                p.name.toLowerCase().includes(filter.toLowerCase()) ||
+                p.desc.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            list.innerHTML = filtered.map(pkg => `
+                <a href="#" class="package-item" onclick="alert('📦 ${pkg.name}\\n${pkg.desc}\\n\\nRepo: https://mrpewios.github.io')">
+                    <div class="pkg-icon">${pkg.icon}</div>
+                    <div class="pkg-info">
+                        <div class="pkg-name">${pkg.name}</div>
+                        <div class="pkg-desc">${pkg.desc}</div>
                     </div>
-                    <p class="package-description">${pkg.description}</p>
-                    <div class="package-meta">
-                        <span class="package-badge">${pkg.badge}</span>
-                        <span>📅 ${pkg.date}</span>
-                    </div>
-                </div>
+                    <span class="pkg-arrow">›</span>
+                </a>
             `).join('');
         }
 
-        // Hàm chuyển đổi giao diện
-        function toggleTheme() {
-            const checkbox = document.getElementById('theme-checkbox');
-            const html = document.documentElement;
-            
-            if (checkbox.checked) {
-                html.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                html.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            }
-        }
+        // TÌM KIẾM
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            renderPackages(e.target.value);
+        });
 
-        // Hàm tải giao diện đã lưu
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            const checkbox = document.getElementById('theme-checkbox');
-            
-            if (savedTheme === 'dark') {
+        // CHUYỂN SÁNG/TỐI
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                checkbox.checked = true;
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('mrpew-theme', 'dark');
             } else {
                 document.documentElement.removeAttribute('data-theme');
-                checkbox.checked = false;
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('mrpew-theme', 'light');
             }
         }
 
-        // Khởi tạo trang
-        function init() {
-            loadTheme();
-            renderPackages();
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // TẢI THEME ĐÃ LƯU
+        const saved = localStorage.getItem('mrpew-theme');
+        if (saved === 'dark') {
+            setTheme('dark');
+        } else {
+            setTheme('light');
         }
 
-        // Chạy khi trang tải xong
-        document.addEventListener('DOMContentLoaded', init);
+        // KHỞI TẠO
+        renderPackages();
     </script>
+
 </body>
 </html>
