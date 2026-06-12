@@ -3,343 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MrPew iOS Repo</title>
+    <title>BVN Repo</title>
     <style>
         :root {
-            --bg: #ffffff;
-            --text: #1c1c1e;
-            --card-bg: #f9f9fb;
-            --border: #e5e5ea;
-            --accent: #007aff;
-            --accent-light: #e8f2ff;
-            --muted: #8e8e93;
-            --header-bg: #ffffff;
-            --shadow: 0 2px 8px rgba(0,0,0,0.04);
-            --toggle-bg: #e9e9ef;
-            --toggle-dot: #ffffff;
+            --bg: #f5f5f7;
+            --card: #ffffff;
+            --text: #1d1d1f;
+            --muted: #86868b;
+            --accent: #0071e3;
+            --border: #d2d2d7;
+            --sep: #e5e5ea;
+            --header-bg: rgba(255,255,255,0.88);
+            --badge-bg: #e8f0fe;
+            --badge-text: #0071e3;
+            --icon-bg: #f2f2f7;
         }
 
         [data-theme="dark"] {
             --bg: #1c1c1e;
-            --text: #f2f2f7;
-            --card-bg: #2c2c2e;
-            --border: #38383a;
-            --accent: #0a84ff;
-            --accent-light: #1a3a5c;
+            --card: #2c2c2e;
+            --text: #f5f5f7;
             --muted: #98989d;
-            --header-bg: #2c2c2e;
-            --shadow: 0 2px 8px rgba(0,0,0,0.3);
-            --toggle-bg: #48484a;
-            --toggle-dot: #1c1c1e;
+            --accent: #2997ff;
+            --border: #48484a;
+            --sep: #38383a;
+            --header-bg: rgba(28,28,30,0.92);
+            --badge-bg: #1c3a5c;
+            --badge-text: #2997ff;
+            --icon-bg: #3a3a3c;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
-            transition: all 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* HEADER giống Cydia/Sileo */
-        .repo-header {
+        /* HEADER mờ như repo gốc */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
             background: var(--header-bg);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 20px;
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--sep);
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: var(--shadow);
         }
 
-        .repo-brand {
+        .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .repo-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #007aff, #5856d6);
+        .repo-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #0071e3, #5ac8fa);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #fff;
             font-weight: 700;
             font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0,113,227,0.3);
         }
 
-        .repo-name {
-            font-size: 20px;
+        .repo-info h1 {
+            font-size: 18px;
             font-weight: 600;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.2px;
         }
 
-        .repo-url {
-            font-size: 13px;
+        .repo-info span {
+            font-size: 12px;
             color: var(--muted);
         }
 
-        /* NÚT CHUYỂN SÁNG/TỐI NHƯ TRONG REPO GỐC */
-        .theme-btn {
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Nút thêm repo */
+        .add-repo-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .add-repo-btn:active { opacity: 0.7; transform: scale(0.95); }
+
+        /* Nút chuyển theme */
+        .theme-icon-btn {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
-            padding: 8px;
+            padding: 6px;
             border-radius: 50%;
-            transition: all 0.2s;
-            color: var(--text);
-            width: 42px;
-            height: 42px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: 0.2s;
+            color: var(--text);
+        }
+        .theme-icon-btn:hover { background: var(--icon-bg); }
+
+        /* PHẦN NỘI DUNG CHÍNH - TRANG CHỦ REPO */
+        .main-content {
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 500px;
+            margin-top: 60px;
         }
 
-        .theme-btn:hover {
-            background: var(--card-bg);
+        .welcome-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
         }
 
-        .theme-btn:active {
-            transform: scale(0.92);
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
         }
 
-        /* PHẦN CHÍNH */
-        .main {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 20px 16px;
-        }
-
-        /* Ô TÌM KIẾM */
-        .search-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 16px;
+        .welcome-sub {
             font-size: 16px;
-            width: 100%;
-            color: var(--text);
-            outline: none;
-            transition: all 0.2s;
-            margin-bottom: 20px;
-        }
-
-        .search-box:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-light);
-        }
-
-        .search-box::placeholder {
             color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.5;
         }
 
-        /* DANH SÁCH GÓI */
-        .package-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .package-item {
-            background: var(--card-bg);
+        .repo-url-box {
+            background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 16px 18px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            transition: all 0.2s;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text);
-        }
-
-        .package-item:hover {
-            box-shadow: var(--shadow);
-            transform: translateY(-1px);
-        }
-
-        .package-item:active {
-            transform: scale(0.985);
-            background: var(--accent-light);
-        }
-
-        .pkg-icon {
-            width: 50px;
-            height: 50px;
             border-radius: 14px;
-            background: var(--accent-light);
+            padding: 14px 20px;
+            font-size: 16px;
+            font-family: 'SF Mono', 'Menlo', monospace;
+            color: var(--accent);
+            display: inline-block;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .action-buttons {
             display: flex;
-            align-items: center;
+            gap: 12px;
             justify-content: center;
-            font-size: 22px;
-            flex-shrink: 0;
+            flex-wrap: wrap;
         }
 
-        .pkg-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .pkg-name {
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 16px;
             font-weight: 600;
-            font-size: 17px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            cursor: pointer;
+            transition: 0.2s;
         }
+        .btn-primary:active { opacity: 0.7; transform: scale(0.95); }
 
-        .pkg-desc {
-            font-size: 14px;
-            color: var(--muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 2px;
+        .btn-secondary {
+            background: var(--card);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
         }
-
-        .pkg-arrow {
-            color: var(--muted);
-            font-size: 18px;
-            flex-shrink: 0;
-        }
+        .btn-secondary:active { opacity: 0.7; transform: scale(0.95); }
 
         /* FOOTER */
-        .repo-footer {
+        .footer {
+            position: fixed;
+            bottom: 20px;
             text-align: center;
-            padding: 30px 20px;
             color: var(--muted);
             font-size: 13px;
-            border-top: 1px solid var(--border);
-            margin-top: 30px;
-        }
-
-        .repo-footer a {
-            color: var(--accent);
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
     <!-- HEADER -->
-    <header class="repo-header">
-        <div class="repo-brand">
-            <div class="repo-avatar">M</div>
-            <div>
-                <div class="repo-name">MrPew</div>
-                <div class="repo-url">mrpewios.github.io</div>
+    <header class="header">
+        <div class="header-left">
+            <div class="repo-logo">B</div>
+            <div class="repo-info">
+                <h1>BVN Repo</h1>
+                <span>repo.bvnrepo.xyz</span>
             </div>
         </div>
-        <button class="theme-btn" id="themeToggle" title="Chuyển sáng/tối">
-            <span id="themeIcon">🌙</span>
-        </button>
+        <div class="header-actions">
+            <button class="theme-icon-btn" id="themeBtn">🌙</button>
+        </div>
     </header>
 
     <!-- NỘI DUNG CHÍNH -->
-    <main class="main">
-        <input type="text" class="search-box" placeholder="Tìm kiếm gói..." id="searchInput">
-
-        <div class="package-list" id="packageList">
-            <!-- Gói sẽ được tạo bằng JS -->
+    <main class="main-content">
+        <div class="welcome-icon">📦</div>
+        <h2 class="welcome-title">Chào mừng đến với BVN Repo</h2>
+        <p class="welcome-sub">Kho lưu trữ gói jailbreak chất lượng cao.<br>Thêm repo này vào trình quản lý gói của bạn để cài đặt.</p>
+        
+        <div class="repo-url-box">https://repo.bvnrepo.xyz</div>
+        
+        <div class="action-buttons">
+            <button class="btn-primary" onclick="copyRepo()">📋 Sao chép URL</button>
+            <button class="btn-secondary" onclick="alert('Mở Cydia/Sileo → Sources → Edit → Add → Dán URL')">📖 Hướng dẫn</button>
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="repo-footer">
-        <p>© 2025 <a href="https://mrpewios.github.io" target="_blank">MrPew Repo</a>. Tất cả gói đều miễn phí.</p>
-        <p style="margin-top: 4px;">Thêm vào Cydia/Sileo: <code style="background:var(--card-bg);padding:2px 6px;border-radius:4px;">https://mrpewios.github.io</code></p>
-    </footer>
+    <div class="footer">
+        <p>© 2025 BVN Repo — Tất cả gói miễn phí</p>
+    </div>
 
     <script>
-        // DỮ LIỆU GÓI - GIỐNG REPO GỐC
-        const packages = [
-            { name: "Choicy", desc: "Tinh chỉnh kiểm soát tweak injection", icon: "🎛️" },
-            { name: "SnowBoard", desc: "Công cụ thay đổi theme mạnh mẽ", icon: "❄️" },
-            { name: "iCleaner Pro", desc: "Dọn dẹp rác hệ thống iOS", icon: "🧹" },
-            { name: "Filza File Manager", desc: "Trình quản lý file cho iOS", icon: "📁" },
-            { name: "AppSync Unified", desc: "Cài đặt ứng dụng IPA không cần ký", icon: "📱" },
-            { name: "NewTerm 2", desc: "Terminal cho iOS", icon: "💻" },
-            { name: "CCSupport", desc: "Hỗ trợ tùy chỉnh Control Center", icon: "🎮" },
-            { name: "RocketBootstrap", desc: "Thư viện cho tweak giao tiếp app", icon: "🚀" },
-            { name: "PreferenceLoader", desc: "Tải preference bundle", icon: "⚙️" },
-            { name: "Cephei", desc: "Framework hỗ trợ lập trình tweak", icon: "🔧" },
-            { name: "libcolorpicker", desc: "Thư viện bảng chọn màu", icon: "🎨" },
-            { name: "Flipswitch", desc: "Công tắc bật/tắt cho Control Center", icon: "🔘" }
-        ];
-
-        // Hàm render danh sách gói
-        function renderPackages(filter = '') {
-            const list = document.getElementById('packageList');
-            const filtered = packages.filter(p => 
-                p.name.toLowerCase().includes(filter.toLowerCase()) ||
-                p.desc.toLowerCase().includes(filter.toLowerCase())
-            );
-
-            list.innerHTML = filtered.map(pkg => `
-                <a href="#" class="package-item" onclick="alert('📦 ${pkg.name}\\n${pkg.desc}\\n\\nRepo: https://mrpewios.github.io')">
-                    <div class="pkg-icon">${pkg.icon}</div>
-                    <div class="pkg-info">
-                        <div class="pkg-name">${pkg.name}</div>
-                        <div class="pkg-desc">${pkg.desc}</div>
-                    </div>
-                    <span class="pkg-arrow">›</span>
-                </a>
-            `).join('');
+        function copyRepo() {
+            navigator.clipboard.writeText('https://repo.bvnrepo.xyz').then(() => {
+                alert('✅ Đã sao chép URL repo!');
+            }).catch(() => {
+                prompt('Sao chép thủ công:', 'https://repo.bvnrepo.xyz');
+            });
         }
 
-        // TÌM KIẾM
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            renderPackages(e.target.value);
-        });
-
-        // CHUYỂN SÁNG/TỐI
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-
-        function setTheme(theme) {
-            if (theme === 'dark') {
+        // Chuyển theme
+        const btn = document.getElementById('themeBtn');
+        function setTheme(t) {
+            if (t === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                themeIcon.textContent = '☀️';
-                localStorage.setItem('mrpew-theme', 'dark');
+                btn.textContent = '☀️';
+                localStorage.setItem('bvn-theme', 'dark');
             } else {
                 document.documentElement.removeAttribute('data-theme');
-                themeIcon.textContent = '🌙';
-                localStorage.setItem('mrpew-theme', 'light');
+                btn.textContent = '🌙';
+                localStorage.setItem('bvn-theme', 'light');
             }
         }
 
-        themeToggle.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            setTheme(current === 'dark' ? 'light' : 'dark');
+        btn.addEventListener('click', () => {
+            const cur = document.documentElement.getAttribute('data-theme');
+            setTheme(cur === 'dark' ? 'light' : 'dark');
         });
 
-        // TẢI THEME ĐÃ LƯU
-        const saved = localStorage.getItem('mrpew-theme');
-        if (saved === 'dark') {
-            setTheme('dark');
-        } else {
-            setTheme('light');
-        }
-
-        // KHỞI TẠO
-        renderPackages();
+        if (localStorage.getItem('bvn-theme') === 'dark') setTheme('dark');
+        else setTheme('light');
     </script>
-
 </body>
 </html>
